@@ -1,0 +1,75 @@
+/* WINDOWS 98 HOLIDAY LIGHTS - INSIDE NOTE VERSION */
+
+/* 1. Target the Note Content Area 
+   This replaces 'body' to ensure lights only appear in the note pane.
+*/
+.view-content {
+  position: relative; /* Anchors the lights to the top of this specific pane */
+}
+
+/* 2. Shared Setup */
+.view-content::before,
+.view-content::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 12px; /* Size of the light strip */
+  z-index: 50; /* High enough to be seen, low enough not to block popups */
+  pointer-events: none; /* Allows you to click through the lights */
+  border-top: 2px solid #222; /* The "Wire" */
+}
+
+/* 3. SET 1: Red and Gold Lights (The "Odd" number lights) */
+.view-content::before {
+  background-image: 
+    radial-gradient(circle, #ff3b3b 30%, transparent 45%),   /* Red Bulb */
+    radial-gradient(circle, #ffd700 30%, transparent 45%);   /* Gold Bulb */
+  background-position: 1px 0%, 14px 0%; /* Your specific spacing */
+  background-size: 30px 100%; 
+  
+  /* Animation: Glow/Fade */
+  animation: holiday-twinkle-1 3s infinite alternate;
+  
+  /* Adds a glowing aura */
+  filter: drop-shadow(0 4px 5px rgba(255, 59, 59, 0.8));
+}
+
+/* 4. SET 2: Green and Blue Lights (The "Even" number lights) */
+.view-content::after {
+  background-image: 
+    radial-gradient(circle, #00ff41 30%, transparent 45%),   /* Green Bulb */
+    radial-gradient(circle, #00bfff 30%, transparent 45%);   /* Blue Bulb */
+  background-position: 7px 0%, 21px 0%; /* Your specific offsets */
+  background-size: 30px 100%;
+  
+  /* Animation: Glow/Fade (Reverse timing) */
+  animation: holiday-twinkle-2 3s infinite alternate;
+  
+  /* Adds a glowing aura */
+  filter: drop-shadow(0 4px 5px rgba(0, 255, 65, 0.8));
+}
+
+/* 5. TEXT PADDING (Optional)
+   This pushes your actual writing down by 20px so the first line 
+   isn't covered by the lights.
+
+.markdown-source-view .cm-scroller, 
+.markdown-preview-view {
+  padding-top: 20px !important;
+}
+*/
+
+/* 6. ANIMATIONS (Your original keyframes) */
+@keyframes holiday-twinkle-1 {
+  0%   { opacity: 1; filter: drop-shadow(0 2px 5px rgba(255, 59, 59, 1)); }
+  50%  { opacity: 0.4; filter: drop-shadow(0 2px 1px rgba(255, 59, 59, 0.2)); }
+  100% { opacity: 1; filter: drop-shadow(0 2px 5px rgba(255, 59, 59, 1)); }
+}
+
+@keyframes holiday-twinkle-2 {
+  0%   { opacity: 0.4; filter: drop-shadow(0 2px 1px rgba(0, 255, 65, 0.2)); }
+  50%  { opacity: 1; filter: drop-shadow(0 2px 5px rgba(0, 255, 65, 1)); }
+  100% { opacity: 0.4; filter: drop-shadow(0 2px 1px rgba(0, 255, 65, 0.2)); }
+}
