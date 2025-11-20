@@ -1,0 +1,73 @@
+/* OBSIDIAN FALLING SNOW 
+   Adds a nostalgic winter atmosphere to your notes.
+   Compatible with the Holiday Lights snippet.
+*/
+
+/* 1. Target the Editing and Reading Views 
+   We use these specific classes so we don't overwrite the 
+   ::before/::after pseudo-elements used by your lights.
+*/
+.markdown-source-view,
+.markdown-preview-view {
+  position: relative;
+  overflow: hidden; /* Ensures snow doesn't spill out */
+}
+
+/* 2. Shared Snow Setup */
+.markdown-source-view::before,
+.markdown-source-view::after,
+.markdown-preview-view::before,
+.markdown-preview-view::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* CRITICAL: Lets you type through the snow */
+  z-index: 40; /* sits below the lights (z:50) but above text */
+}
+
+/* 3. LAYER 1: Small, Slow Background Snow */
+.markdown-source-view::before,
+.markdown-preview-view::before {
+  /* Creates tiny dots using gradients */
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px,  rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px,  rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 50px 160px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 80px 120px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 110px 40px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 160px 120px, rgba(255, 255, 255, 0.8), transparent);
+  
+  background-size: 200px 200px; /* Pattern repeats every 200px */
+  animation: snow-fall 10s linear infinite;
+  opacity: 0.6;
+}
+
+/* 4. LAYER 2: Larger, Faster Foreground Snow */
+.markdown-source-view::after,
+.markdown-preview-view::after {
+  /* Slightly larger dots */
+  background-image: 
+    radial-gradient(3px 3px at 10px 50px,  rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(3px 3px at 60px 100px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(3px 3px at 120px 150px,rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(3px 3px at 150px 40px, rgba(255, 255, 255, 0.9), transparent);
+  
+  background-size: 250px 250px; 
+  animation: snow-fall 6s linear infinite; /* Falls faster */
+  opacity: 0.8;
+}
+
+/* 5. Animation: Vertical Loop */
+@keyframes snow-fall {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    /* Must match the background-size height to loop seamlessly */
+    background-position: 0 1000px; 
+  }
+}
